@@ -1,12 +1,22 @@
 ﻿using System;
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-double[]notas = new double[5];
-double soma = 0;
+double[]notas = new double[5]; // array de notas a guardar
+double soma = 0; // o sumatório das notas
 
+int aprovados = 0; // # aprovados
+int reprovados = 0; // # reprovados
+double media = 0.0; //média
+
+// variáveis auxiliares
+string auxAluno = "";
+string auxAprovacao = "";
+double auxNota = 0.0; 
+
+// input de dados
 for (int i = 0; i < 5; i++)
 {
-    Console.Write("Introduza a nota do aluno: ");
+    Console.Write($"Introduza a nota do aluno {i+1}: ");
     notas[i] = Convert.ToDouble(Console.ReadLine());
     while (notas[i] < 0 || notas[i] > 20)
     {
@@ -16,26 +26,33 @@ for (int i = 0; i < 5; i++)
     soma = soma + notas[i];
 }
 
-double media = soma / notas.Length;
-int aprovados = 0;
-int reprovados = 0;
-
 Console.WriteLine();
 
+//verificação de aprovados/reprovados
 for (int i = 0; i < 5; i++)
 {
-    if (notas[i] >= 10)        
+    auxAluno = $"{i+1} aluno ";
+    auxNota = notas[i];
+    if (auxNota >= 10)        
     {
         aprovados++;
-        Console.WriteLine(notas[i] + " - Aprovado\n");
+        auxAprovacao = " - Aprovado";
     }
     else
     {
         reprovados++;
-        Console.WriteLine(notas[i] + " - Reprovado\n");
+        auxAprovacao = " - Reprovado";
     }
+    Console.WriteLine(auxAluno + ": " + auxNota + auxAprovacao );
 }
+
+Console.WriteLine("-----------------------------");
 
 Console.WriteLine("Numero de Reprovados: " + reprovados);
 Console.WriteLine("Numero de Aprovados: " + aprovados);
+
+// calculo da média
+media = soma / notas.Length;
+
+Console.WriteLine("-----------------------------");
 Console.WriteLine("\nMédia dos Alunos: " + media);
