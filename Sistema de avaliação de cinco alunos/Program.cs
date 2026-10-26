@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Globalization;
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 double[]notas = new double[5]; // array de notas a guardar
@@ -12,17 +12,21 @@ double media = 0.0; //média
 string auxAluno = "";
 string auxAprovacao = "";
 double auxNota = 0.0; 
+string auxInput = "";
 
 // input de dados
 for (int i = 0; i < 5; i++)
 {
     Console.Write($"Introduza a nota do aluno {i+1}: ");
-    notas[i] = Convert.ToDouble(Console.ReadLine());
-    while (notas[i] < 0 || notas[i] > 20)
+    auxInput = Console.ReadLine() ?? "";
+    // aceita vírgula ou ponto como separador decimal; rejeita texto e valores fora de 0–20
+    while (!double.TryParse(auxInput.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out auxNota)
+           || auxNota < 0 || auxNota > 20)
     {
-        Console.Write("Valor inválido! A nota deve estar entre 0 e 20.\n Introduza a nota do aluno: ");
-        notas[i] = Convert.ToDouble(Console.ReadLine());
+        Console.Write("Valor inválido! A nota deve ser um número entre 0 e 20.\nIntroduza a nota do aluno: ");
+        auxInput = Console.ReadLine() ?? "";
     }
+    notas[i] = auxNota;
     soma = soma + notas[i];
 }
 
